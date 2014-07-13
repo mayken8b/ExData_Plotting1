@@ -1,3 +1,4 @@
+# read in data and clean it
 power_data <- read.table("household_power_consumption.txt", comment.char = "", 
                          sep = ";", header = TRUE, na.strings = "?",
                          colClasses = c("character", "character", "numeric", "numeric",
@@ -10,9 +11,12 @@ clean_data$Date <- strptime(paste(clean_data$Date, clean_data$Time),
 
 final_data <- clean_data[,c(1, 3, 4, 5, 6, 7, 8, 9)]
 
+# create a graphics png device file in the working directory
 png(filename = "plot1.png", width = 480, height = 480)
 
-hist (final_data$Global_active_power, col = "red", 
+# create the plot
+hist(final_data$Global_active_power, col = "red", 
       xlab = "Global Active Power (kilowatts)", main = "Global Active Power")
 
+# turn off the graphics device
 dev.off()

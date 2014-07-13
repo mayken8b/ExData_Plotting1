@@ -1,3 +1,4 @@
+# read in data and clean it
 power_data <- read.table("household_power_consumption.txt", comment.char = "", 
                          sep = ";", header = TRUE, na.strings = "?",
                          colClasses = c("character", "character", "numeric", "numeric",
@@ -10,15 +11,19 @@ clean_data$Date <- strptime(paste(clean_data$Date, clean_data$Time),
 
 final_data <- clean_data[,c(1, 3, 4, 5, 6, 7, 8, 9)]
 
+# create graphics png device in the working directory
 png(filename = "plot4.png")
 
+# change global graphics settings for multiple plots to be show
 par(mfcol = c(2,2))
 par(mar = c(5, 4, 4, 2))
 
+# create first plot
 plot(final_data$Date, final_data$Global_active_power, type = "n", xlab = "",
      ylab = "Global Active Power (kilowatts)")
 lines(final_data$Date, final_data$Global_active_power)
 
+# create second plot
 plot(final_data$Date, final_data$Sub_metering_1, type = "n", xlab = "",
      ylab = "Energy sub metering")
 lines(final_data$Date, final_data$Sub_metering_1)
@@ -28,12 +33,15 @@ legend("topright", legend = c("Sub_metering_1", "Sub_metering_2",
                               "Sub_metering_3"), lwd = 1,
        col = c("black", "red", "blue"), bty = "n")
 
+# create third plot
 plot(final_data$Date, final_data$Voltage, type = "n", xlab = "datetime", 
      ylab = "Voltage")
 lines(final_data$Date, final_data$Voltage)
 
+# create fourth plot
 plot(final_data$Date, final_data$Global_reactive_power, type = "n", 
      xlab = "datetime", ylab = "Global_reactive_power")
 lines(final_data$Date, final_data$Global_reactive_power)
 
+# turn off graphics device
 dev.off()
